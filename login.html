@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - مخيم صيفي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-campground"></i>
+                </div>
+                <h2>إدارة المخيمات الصيفية</h2>
+                <div class="moroccan-pattern mt-2 mb-4"></div>
+            </div>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">اسم المستخدم</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">كلمة المرور</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="campName" class="form-label">اسم المخيم</label>
+                    <input type="text" class="form-control" id="campName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">المدينة</label>
+                    <select class="form-select" id="city" required>
+                        <option value="">اختر المدينة</option>
+                        <option value="الدار البيضاء">الدار البيضاء</option>
+                        <option value="الرباط">الرباط</option>
+                        <option value="فاس">فاس</option>
+                        <option value="طنجة">طنجة</option>
+                        <option value="أكادير">أكادير</option>
+                        <option value="تطوان">تطوان</option>
+                        <option value="وجدة">وجدة</option>
+                        <option value="العيون">العيون</option>
+                        <option value="الصويرة">الصويرة</option>
+                      
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="stageDate" class="form-label">تاريخ المرحلة</label>
+                    <input type="date" class="form-control" id="stageDate">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

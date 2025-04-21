@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جرد أمتعة الطفل - مخيم صيفي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/css/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-campground me-2"></i> مخيمي | Mokhayami </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-home me-1"></i> الرئيسية </a></li>
+                    <li class="nav-item"><a class="nav-link" href="children.html"><i class="fas fa-child me-1"></i> الأطفال </a></li>
+                    <li class="nav-item"><a class="nav-link" href="luggage.html"><i class="fas fa-suitcase me-1"></i> أمتعة الطفل </a></li>
+                    <li class="nav-item"><a class="nav-link" href="bank.html"><i class="fas fa-money-bill-wave me-1"></i> بنك الطفل </a></li>
+                    <li class="nav-item"><a class="nav-link active" href="nasheed.html"><i class="fas fa-music me-1"></i> أنشودة </a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reports.html"><i class="fas fa-file-alt me-1"></i> تقارير </a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-phone me-1"></i> تواصل </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container container">
+        <h2 class="text-center mb-4">جرد أمتعة الطفل</h2>
+        <div class="moroccan-pattern mb-4"></div>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="#" id="backToChildren" class="btn btn-secondary"><i class="fas fa-arrow-right me-2"></i>العودة إلى الأطفال</a>
+        </div>
+        <div id="childInfo" class="card mb-4" style="display: none;">
+            <div class="card-header">
+                <h5 class="mb-0">معلومات الطفل</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>الاسم الكامل:</strong> <span id="childName">-</span></p>
+                <p><strong>المدينة:</strong> <span id="childCity">-</span></p>
+                <p><strong>العمر:</strong> <span id="childAge">-</span></p>
+            </div>
+        </div>
+        <div id="luggageSection" style="display: none;">
+            <div class="text-center mb-4">
+                <button class="btn btn-success" id="addLuggageBtn"><i class="fas fa-plus-circle me-2"></i>إضافة غرض جديد</button>
+            </div>
+            <div id="luggageFormSection" class="mb-4" style="display: none;">
+                <form id="luggageForm" class="row g-3 align-items-end">
+                    <div class="col-md-3 col-12">
+                        <label for="luggageType" class="form-label">نوع الغرض</label>
+                        <input type="text" class="form-control" id="luggageType" list="luggageTypes" placeholder="اكتب أو اختر" required>
+                        <datalist id="luggageTypes">
+                            <option value="قبعة">
+                            <option value="حقيبة">
+                            <option value="جوارب">
+                            <option value="أحذية">
+                            <option value="ملابس">
+                            <option value="بطانية">
+                            <option value="فرشاة أسنان">
+                            <option value="منشفة">
+                        </datalist>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <label for="luggageColor" class="form-label">اللون (اختياري)</label>
+                        <select class="form-select" id="luggageColor">
+                            <option value="">اختر اللون</option>
+                            <option value="أحمر" style="background-color: #ff0000; color: white;">أحمر</option>
+                            <option value="أزرق" style="background-color: #0000ff; color: white;">أزرق</option>
+                            <option value="أخضر" style="background-color: #00ff00; color: black;">أخضر</option>
+                            <option value="أصفر" style="background-color: #ffff00; color: black;">أصفر</option>
+                            <option value="أسود" style="background-color: #000000; color: white;">أسود</option>
+                            <option value="أبيض" style="background-color: #ffffff; color: black;">أبيض</option>
+                            <option value="رمادي" style="background-color: #808080; color: white;">رمادي</option>
+                            <option value="بني" style="background-color: #8b4513; color: white;">بني</option>
+                            <option value="وردي" style="background-color: #ff69b4; color: white;">وردي</option>
+                            <option value="برتقالي" style="background-color: #ffa500; color: white;">برتقالي</option>
+                            <option value="بنفسجي" style="background-color: #800080; color: white;">بنفسجي</option>
+                            <option value="تركواز" style="background-color: #40e0d0; color: black;">تركواز</option>
+                            <option value="زيتي" style="background-color: #808000; color: white;">زيتي</option>
+                            <option value="فضي" style="background-color: #c0c0c0; color: black;">فضي</option>
+                            <option value="ذهبي" style="background-color: #ffd700; color: black;">ذهبي</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label for="luggageQuantity" class="form-label">العدد</label>
+                        <input type="number" class="form-control" id="luggageQuantity" min="1" value="1" readonly>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <label for="luggageNotes" class="form-label">ملاحظات</label>
+                        <input type="text" class="form-control" id="luggageNotes" placeholder="ملاحظات">
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-success btn-lg px-4"><i class="fas fa-save me-2"></i>حفظ</button>
+                        <button type="button" class="btn btn-danger" id="cancelLuggage"><i class="fas fa-times"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">سجل الأمتعة</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>نوع الغرض</th>
+                                    <th>اللون</th>
+                                    <th>العدد</th>
+                                    <th>ملاحظات</th>
+                                    <th>إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="luggageTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="text-end mt-3">
+                        <a href="#" id="backToChildrenBottom" class="btn btn-secondary d-block mb-2"><i class="fas fa-arrow-right me-2"></i>العودة إلى الأطفال</a>
+                        <button class="btn btn-primary" id="exportExcel"><i class="fas fa-file-export me-2"></i>تصدير البيانات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background-color: #1a1a1a; color: #fff8dc; padding: 1.5rem 1rem; text-align: center; font-family: 'Tajawal', sans-serif; font-size: 0.85rem;">
+        <div style="margin-bottom: 0.8rem;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Morocco.svg" alt="علم المغرب" style="width: 30px; height: auto; border-radius: 4px; box-shadow: 0 0 6px rgba(0,0,0,0.2);">
+        </div>
+        <p style="margin: 0.4rem 0;">مخيمي © 2025 - جميع الحقوق محفوظة</p>
+        <p style="margin: 0.4rem 0;">
+          تواصل معنا:
+          <a href="mailto:aadlani.ma@gmail.com" style="color: #ffd700; text-decoration: none; margin: 0 5px;">البريد الإلكتروني</a> |
+          <a href="https://www.instagram.com/adlanis9/" target="_blank" style="color: #ffd700; text-decoration: none; margin: 0 5px;">إنستغرام</a> |
+          <a href="https://www.linkedin.com/in/aadlani-med/" target="_blank" style="color: #ffd700; text-decoration: none; margin: 0 5px;">لينكدإن</a>
+        </p>
+      </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="js/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="js/luggage.js"></script>
+
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

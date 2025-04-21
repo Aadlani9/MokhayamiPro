@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقارير - مخيمي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="/manifest.json">
+    
+    <style>
+        .main-container { padding: 15px; }
+        .report-card {
+            transition: transform 0.3s;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .report-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        .preview-container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .preview-document {
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin: 0;
+            width: 100%;
+            position: relative;
+            min-height: auto;
+            box-sizing: border-box;
+        }
+        .document-header {
+            text-align: center;
+            margin: 0;
+            padding: 5px 0;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+        .document-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+        .document-creation-info p {
+            margin: 5px 0;
+        }
+        .app-footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .right-aligned { text-align: right; }
+        .left-aligned { text-align: left; }
+        .centered { text-align: center; }
+        .form-section { display: none; }
+        .activity-info {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+        .activity-info p {
+            margin-bottom: 10px;
+        }
+        .report-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            text-align: center;
+            text-decoration: underline;
+        }
+        .reports-table {
+            margin-top: 20px;
+        }
+        .children-table {
+            margin: 10px 0;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        .children-table table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        .children-table th, .children-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .children-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .children-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        @media screen and (max-width: 768px) {
+            .report-card .card-body { padding: 15px; }
+            .report-icon { font-size: 2rem; }
+            .btn-lg { font-size: 0.9rem; padding: 8px 12px; }
+            .preview-document { padding: 10px; }
+            .document-header h4 { font-size: 1.2rem; }
+            .report-title { font-size: 1.3rem; }
+            .info-line { flex-direction: column; margin-bottom: 10px; }
+            .info-label { min-width: auto; margin-bottom: 5px; }
+            .document-footer { margin-top: 15px; }
+            .children-table { -webkit-overflow-scrolling: touch; }
+            .children-table th, .children-table td { padding: 5px; font-size: 0.8rem; }
+        }
+        @media print {
+            body * { visibility: hidden; }
+            .preview-document, .preview-document * { visibility: visible; }
+            .preview-document {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+            .no-print { display: none !important; }
+            .children-table { overflow-x: visible; }
+            .children-table table { min-width: auto; }
+            .app-footer { font-size: 0.7rem; }
+            .document-header, .report-title, .activity-info, .document-footer {
+                margin: 0;
+                padding: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-campground me-2"></i> مخيمي | Mokhayami </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> الرئيسية </a></li>
+                    <li class="nav-item"><a class="nav-link" href="children.html"><i class="fas fa-child me-1"></i> الأطفال </a></li>
+                    <li class="nav-item"><a class="nav-link" href="luggage.html"><i class="fas fa-suitcase me-1"></i> أمتعة الطفل </a></li>
+                    <li class="nav-item"><a class="nav-link" href="bank.html"><i class="fas fa-money-bill-wave me-1"></i> بنك الطفل </a></li>
+                    <li class="nav-item"><a class="nav-link" href="nasheed.html"><i class="fas fa-music me-1"></i> أنشودة </a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reports.html"><i class="fas fa-file-alt me-1"></i> تقارير </a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-phone me-1"></i> تواصل </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container container">
+        <h2 class="text-center mb-4">تقارير المخيم</h2>
+        <div class="moroccan-pattern mb-4"></div>
+
+        <div id="reportTypeSelection" class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <div class="report-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="card-title">بطاقة تقنية لنشاط</h3>
+                        <p class="card-text">إنشاء بطاقة تقنية لنشاط عادي</p>
+                        <button class="btn btn-primary btn-lg mt-3" id="addActivityBtn">
+                            <i class="fas fa-plus-circle me-2"></i>إنشاء بطاقة
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <div class="report-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="card-title">بطاقة تقنية لمعمل تربوي</h3>
+                        <p class="card-text">إنشاء بطاقة لمعمل تربوي</p>
+                        <button class="btn btn-success btn-lg mt-3" id="addLabBtn">
+                            <i class="fas fa-plus-circle me-2"></i>إنشاء بطاقة
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <div class="report-icon">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <h3 class="card-title">بطاقة تقنية لسهرة</h3>
+                        <p class="card-text">إنشاء بطاقة لفقرة في سهرة</p>
+                        <button class="btn btn-info btn-lg mt-3" id="addEveningBtn">
+                            <i class="fas fa-plus-circle me-2"></i>إنشاء بطاقة
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <div class="report-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="card-title">تعهد بشرف التأطير</h3>
+                        <p class="card-text">إنشاء تعهد التزام بالمسؤولية</p>
+                        <button class="btn btn-warning btn-lg mt-3" id="addCommitmentBtn">
+                            <i class="fas fa-plus-circle me-2"></i>إنشاء تعهد
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reportFormSection" class="form-section">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0" id="formTitle">بطاقة تقنية لنشاط</h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm back-btn">
+                        <i class="fas fa-arrow-right me-1"></i> عودة
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="reportForm">
+                        <input type="hidden" id="reportType">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="activityDate" class="form-label">تاريخ النشاط</label>
+                                <input type="date" class="form-control" id="activityDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="activityPlace" class="form-label">مكان النشاط</label>
+                                <input type="text" class="form-control" id="activityPlace" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="activityType" class="form-label">نوع النشاط</label>
+                                <input type="text" class="form-control" id="activityType" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="malesCount" class="form-label">عدد الذكور</label>
+                                <input type="number" class="form-control" id="malesCount" min="0" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="femalesCount" class="form-label">عدد الإناث</label>
+                                <input type="number" class="form-control" id="femalesCount" min="0" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="supervisorName" class="form-label">اسم المنشط</label>
+                                <input type="text" class="form-control" id="supervisorName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="duration" class="form-label">المدة الزمنية</label>
+                                <input type="text" class="form-control" id="duration" placeholder="مثال: 2 ساعات">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="goals" class="form-label">الأهداف</label>
+                                <textarea class="form-control" id="goals" rows="2" placeholder="أهداف النشاط"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="values" class="form-label">القيم المراد ترسخها</label>
+                                <textarea class="form-control" id="values" rows="2" placeholder="القيم"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="skills" class="form-label">المهارات المطورة</label>
+                                <textarea class="form-control" id="skills" rows="2" placeholder="المهارات"></textarea>
+                            </div>
+                        </div>
+                        <div id="specificFields" class="mb-3"></div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-lg" id="generateReportBtn">
+                                <i class="fas fa-file-alt me-2"></i>معاينة البطاقة
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="commitmentFormSection" class="form-section">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0" id="commitmentFormTitle">التزام بشرف التأطير</h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm back-btn">
+                        <i class="fas fa-arrow-right me-1"></i> عودة
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="commitmentForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="commitmentDate" class="form-label">تاريخ التعهد</label>
+                                <input type="date" class="form-control" id="commitmentDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="commitmentSupervisor" class="form-label">الاسم الكامل للمؤطر</label>
+                                <input type="text" class="form-control" id="commitmentSupervisor" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="commitmentGroup" class="form-label">الفرقة (اختياري)</label>
+                                <input type="text" class="form-control" id="commitmentGroup">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="commitmentCommunity" class="form-label">الجماعة (اختياري)</label>
+                                <input type="text" class="form-control" id="commitmentCommunity">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">الأطفال تحت المسؤولية</label>
+                                <div class="children-list" id="childrenList">
+                                    <!-- سيتم إضافة الأطفال هنا بشكل ديناميكي -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="alert alert-info">
+                                    <strong>نص التعهد:</strong>
+                                    <p class="mt-2">أنا الموقع أسفله، أتعهد بأن أقوم بواجباتي التربوية والإدارية تجاه الأطفال الموكل إلي أمرهم طيلة مدة التخييم.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-lg" id="generateCommitmentBtn">
+                                <i class="fas fa-file-alt me-2"></i>معاينة التعهد
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="reports-table">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">سجل البطاقات التقنية</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>المكان</th>
+                                    <th>نوع النشاط</th>
+                                    <th>عدد المستفيدين</th>
+                                    <th>المدة الزمنية</th>
+                                    <th>إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="commitments-table reports-table">
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">سجل التعهدات</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>اسم المؤطر</th>
+                                    <th>الفرقة</th>
+                                    <th>عدد الأطفال</th>
+                                    <th>إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="commitmentsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reportPreview" class="preview-container" style="display: none;">
+            <div class="d-flex justify-content-between mb-3 no-print">
+                <button type="button" class="btn btn-outline-secondary back-to-form">
+                    <i class="fas fa-arrow-right me-1"></i> تعديل البيانات
+                </button>
+                <div>
+                    <button type="button" class="btn btn-success me-2" id="downloadPdfBtn">
+                        <i class="fas fa-download me-1"></i> تحميل PDF
+                    </button>
+                    <button type="button" class="btn btn-primary" id="printReportBtn">
+                        <i class="fas fa-print me-1"></i> طباعة
+                    </button>
+                </div>
+            </div>
+            <div class="preview-document" id="reportDocument">
+                <div class="document-header text-center">
+                    <h4>مخيم: <span id="displayCampName"></span></h4>
+                </div>
+                <div class="header-info d-flex justify-content-between mb-3">
+                    <div class="activity-type">نوع النشاط: <span id="displayActivityType"></span></div>
+                    <div class="year-info">صيف <span id="displaySummer"></span></div>
+                </div>
+                <div class="report-title">بطاقة تقنية للنشاط</div>
+                <div class="text-center mb-3">
+                    <strong>المنشط:</strong> <span id="displayReportSupervisor"></span>
+                </div>
+                <div class="activity-info">
+                    <div class="info-line">
+                        <div class="info-label">التاريخ:</div>
+                        <div id="displayDate"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">المكان:</div>
+                        <div id="displayPlace"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">نوع النشاط:</div>
+                        <div id="displayType"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">عدد المستفيدين:</div>
+                        <div id="displayParticipants"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">المدة الزمنية:</div>
+                        <div id="displayDuration"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">الأهداف:</div>
+                        <div id="displayGoals"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">القيم:</div>
+                        <div id="displayValues"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">المهارات:</div>
+                        <div id="displaySkills"></div>
+                    </div>
+                    <div class="observations info-line">
+                        <div class="info-label">ملاحظات إضافية:</div>
+                        <div id="displaySpecific"></div>
+                    </div>
+                </div>
+                <div class="document-footer">
+                    <div class="document-creation-info">
+                        <p>حرر في: <span id="displayCreationLocation"></span> بتاريخ: <span id="displayCreationDate"></span></p>
+                        <p>توقيع المؤطر(ة): <span id="displayReportSupervisor"></span> ____________________</p>
+                    </div>
+                    <div class="app-footer">
+                        مخيمي | Mokhayami - منصة مغربية لتسير المخيمات الصيفية www.mokhayami.com
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="commitmentPreview" class="preview-container" style="display: none;">
+            <div class="d-flex justify-content-between mb-3 no-print">
+                <button type="button" class="btn btn-outline-secondary back-to-commitment-form">
+                    <i class="fas fa-arrow-right me-1"></i> تعديل البيانات
+                </button>
+                <div>
+                    <button type="button" class="btn btn-success me-2" id="downloadCommitmentPdfBtn">
+                        <i class="fas fa-download me-1"></i> تحميل PDF
+                    </button>
+                    <button type="button" class="btn btn-primary" id="printCommitmentBtn">
+                        <i class="fas fa-print me-1"></i> طباعة
+                    </button>
+                </div>
+            </div>
+            <div class="preview-document" id="commitmentDocument">
+                <div class="document-header text-center">
+                    <h4>مخيم: <span id="displayCommitmentCampName"></span></h4>
+                </div>
+                <div class="header-info d-flex justify-content-between mb-3">
+                    <div class="activity-type">تعهد بشرف التأطير</div>
+                    <div class="year-info">صيف <span id="displayCommitmentSummer"></span></div>
+                </div>
+                <div class="report-title">تعهد بشرف التأطير</div>
+                <div class="text-center mb-3">
+                    <strong>المؤطر:</strong> <span id="displayCommitmentSupervisor"></span>
+                </div>
+                <div class="activity-info">
+                    <div class="info-line">
+                        <div class="info-label">التاريخ:</div>
+                        <div id="displayCommitmentDate"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">الاسم الكامل:</div>
+                        <div id="displayCommitmentSupervisor"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">الفرقة:</div>
+                        <div id="displayCommitmentGroup"></div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">الجماعة:</div>
+                        <div id="displayCommitmentCommunity"></div>
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <p><strong>أنا الموقع أسفله، أتعهد بأن أقوم بواجباتي التربوية والإدارية تجاه الأطفال الموكل إلي أمرهم طيلة مدة التخييم.</strong></p>
+                </div>
+                <div class="mt-4">
+                    <div class="info-label">الأطفال تحت المسؤولية:</div>
+                    <div id="displayCommitmentChildrenTable" class="children-table"></div>
+                </div>
+                <div class="document-footer">
+                    <div class="document-creation-info">
+                        <p>حرر في: <span id="displayCommitmentCreationLocation"></span> بتاريخ: <span id="displayCommitmentCreationDate"></span></p>
+                        <p>توقيع المؤطر(ة): <span id="displaySignatureSupervisor"></span> </p>
+                    </div>
+                    <div class="app-footer">
+                        مخيمي | Mokhayami - منصة مغربية لتسير المخيمات الصيفية www.mokhayami.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light text-center py-3">
+        <p>مخيمي © 2025 - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>

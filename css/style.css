@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #c1272d;
+    --secondary-color: #006233;
+    --accent-color: #00a8e8;
+    --sun-color: #ffb703;
+    --forest-color: #4d774e;
+    --light-bg: #f8f5f0;
+    --dark-text: #333;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    /* margin-bottom: 200px; */
+    font-size: 19px;
+
+}
+
+
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #fff;
+}
+.table-lg {
+    font-size: 1.1rem; /* font table size..*/
+}
+
+
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f5f0; 
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #fff; 
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    #paymentForm .col-6 {
+        width: 50%; 
+    }
+    #paymentForm .col-12 {
+        width: 100%;
+    }
+    #paymentForm .form-control {
+        font-size: 1rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    #paymentForm .form-control-lg {
+        font-size: 1.25rem;
+    }
+    #paymentForm .btn-lg {
+        padding: 0.5rem 2rem; 
+    }
+    #paymentForm .col-12 {
+        margin-bottom: 1rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    #luggageForm .col-6 {
+        width: 50%; 
+    }
+    #luggageForm .col-12 {
+        width: 100%; 
+    }
+}
+.text-end .d-block {
+    display: block !important; 
+}
+
+.btn-luggage {
+    background-color: #ff9800;
+    color: white;
+}
+
+.btn-luggage:hover {
+    background-color: #e68900;
+}
+
+@media (max-width: 768px) {
+    .action-buttons .btn-lg {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .table tr {
+        cursor: pointer;
+    }
+}
+
+.remaining-amount {
+    color: #28a745; 
+}
+
+.table tr {
+    cursor: pointer; 
+}
+
+.color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+
+.card-body .badge {
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.card-body .btn {
+    margin: 5px;
+}
+
+.navbar {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--sun-color) !important;
+}
+
+.main-container {
+    min-height: calc(100vh - 72px);
+    padding: 20px;
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #a01f25;
+    border-color: #a01f25;
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-success:hover {
+    background-color: #004d29;
+    border-color: #004d29;
+}
+
+.btn-info {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0089c0;
+    border-color: #0089c0;
+    color: white;
+}
+
+.btn-bank {
+    background-color: silver;
+    border-color: #a8a8a8;
+    color: #333;
+}
+
+.btn-bank:hover {
+    background-color: #a8a8a8;
+    border-color: #878787;
+}
+
+.moroccan-pattern {
+    height: 15px;
+    background-image: linear-gradient(45deg, var(--primary-color) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--primary-color) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--primary-color) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--primary-color) 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+}
+
+.stat-card {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+}
+
+.stat-card.primary {
+    background-color: var(--primary-color);
+}
+
+.stat-card.secondary {
+    background-color: var(--secondary-color);
+}
+
+.stat-card.accent {
+    background-color: var(--accent-color);
+}
+
+.stat-card.sun {
+    background-color: var(--sun-color);
+    color: var(--dark-text);
+}
+
+.stat-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+}
+
+.stat-card p {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 98, 51, 0.25);
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+.login-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo {
+    font-size: 50px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}
